@@ -1,0 +1,73 @@
+<!DOCTYPE html5>
+<html lang="en">
+<head>
+    <title>Contacts</title>
+    <meta charset="utf-8">
+    
+    <link rel="stylesheet" type="text/css" media="screen" href="css/reset.css">
+	<link rel="stylesheet" type="text/css" href="css/style.css" />
+	
+    <link href='http://fonts.googleapis.com/css?family=Cabin+Sketch:400,700' rel='stylesheet' type='text/css'>
+    <script src="js/jquery-1.7.min.js"></script>
+    <script src="js/jquery.easing.1.3.js"></script>
+
+</head>
+<body>
+  <!--==============================header=================================-->
+  <div class="header">
+  	<div>
+        <div class="subpages-nav">
+            <nav>  
+                <ul class="menu">
+                    <li class="li-none"><a href="index.html">Inicio</a></li>
+                    <li a class="current"><a href="contacto.html">Contacto</a></li>
+                    <li><a href="portfolio.html">Galeria</a></li>
+                    <li><a href="news.html">Términos y Condiciones</a></li>
+                    <li ><a href="contacts.html">Rentar Auto</a></li>
+					<li href="services.html"><a href="services.html">Perfil</a></li>
+                </ul>
+                <h1><a href="index.html"><img src="images/logo.png" alt=""></a></h1>
+            </nav>
+        </div>
+    </div>
+  </div>   
+<!--==============================content================================-->
+    <section id="content"><div class="ic"></div>
+    	<div class="pad-1">
+            <div class="page6-row1">
+            	<div class="col-14">
+                    <h2 class="h2">Telefonos</h2>
+					<dl>
+                    	<dt class="clr-1"><strong >Avenida Mexico-Tacuba No 47</strong><br>Miguel Hidalgo, Distrito Federal</dt>
+                        <dd><span>Telefono:</span>56789211</dd>
+                        <dd><span>Celular:</span>5515141211</dd>
+                        <dd class="p3"><span>Email:</span><a href="#" class="link">simplecar@hotmail.com</a></dd> 
+                    </dl> 
+                </div> 
+                <div class="col-15">
+                    <h2 class="h2 p2">Como Llegar</h2>
+					<div class="map img-border">
+					  <iframe width="425" height="350" frameborder="0" scrolling="no" marginheight="0" marginwidth="0" src="https://maps.google.com.mx/maps?f=q&amp;source=s_q&amp;hl=es-419&amp;geocode=&amp;q=mexico+tacuba+47&amp;aq=&amp;sll=19.320099,-99.152184&amp;sspn=0.703696,1.352692&amp;t=h&amp;ie=UTF8&amp;hq=&amp;hnear=M%C3%A9xico-tacuba+47,+Un+Hogar+Para+Nosotros,+Miguel+Hidalgo,+Ciudad+de+M%C3%A9xico,+DF&amp;ll=19.444534,-99.167432&amp;spn=0.002909,0.005284&amp;z=14&amp;output=embed"></iframe><br /><a href="https://maps.google.com.mx/maps?f=q&amp;source=embed&amp;hl=es-419&amp;geocode=&amp;q=mexico+tacuba+47&amp;aq=&amp;sll=19.320099,-99.152184&amp;sspn=0.703696,1.352692&amp;t=h&amp;ie=UTF8&amp;hq=&amp;hnear=M%C3%A9xico-tacuba+47,+Un+Hogar+Para+Nosotros,+Miguel+Hidalgo,+Ciudad+de+M%C3%A9xico,+DF&amp;ll=19.444534,-99.167432&amp;spn=0.002909,0.005284&amp;z=14" class="link">Ver mapa más grande</a>
+					</div>
+
+                </div>
+                <div class="col-16">
+                    <h2 class="h2 p2">Envianos un comentario</h2>
+					<form id="form" method="post" >
+                      <fieldset>
+                        <label><input type="text" value="Nombre Completo" onBlur="if(this.value=='') this.value='Nombre Completo'" onFocus="if(this.value =='Nombre Completo' ) this.value=''"></label>
+                        <label><input type="text" value="Email" onBlur="if(this.value=='') this.value='Email'" onFocus="if(this.value =='Email' ) this.value=''"></label>
+                        <label><textarea onBlur="if(this.value==''){this.value='Mensaje'}" onFocus="if(this.value=='Mensaje'){this.value=''}">Mensaje</textarea></label>
+                        <div class="btns"><a href="#" class="link-1">Limpiar</a><a href="#" class="link-1" onClick="document.getElementById('form').submit()">Enviar</a></div>
+                      </fieldset>  
+                    </form> 
+                </div>
+            </div>
+        </div>           
+    </section> 
+<!--==============================footer=================================-->
+    <footer>
+         <span><strong>© 2013 ESCOM</strong><br><span>Arroyo. | Ortíz. | Cardenas </span><br/>
+    </footer>	           
+</body>
+</html>
