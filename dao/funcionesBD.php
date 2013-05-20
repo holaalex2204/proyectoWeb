@@ -145,7 +145,6 @@
 		try {
 			$conn = new PDO('mysql:host='.$url.';dbname='.$db.';charset=utf8', $usuario, $password);
 			$qry = "INSERT INTO sitiosServicio (id_sucursal, id_sitio)  VALUE (".$sucursal.",".$sitio.");";
-			echo($qry);
 			$cont = $conn->exec($qry);
 			$conn = null;
 		} catch (PDOException $e) {
@@ -154,7 +153,68 @@
 		}
 		return $cont;
 	}
+	function getPaises() //devuelve países en forma de opciones para un select
+	{
+		global $url, $usuario, $password, $db;
+		try {
+			$texto = " ";
+			$conn = new PDO('mysql:host='.$url.';dbname='.$db.';charset=utf8', $usuario, $password);
+			$qry = "select * from pais order by 2 asc;";
+			
+			foreach ($conn->query($qry) as $row) 
+			{
+				$texto = $texto."<option value='".$row['id']."'>".$row['nombre']."</option>";
+			}
+			$conn = null;
+		} catch (PDOException $e) {
+		    print "Error!: " . $e->getMessage() . "<br/>";
+		    die();
+		}
+		echo($texto);
+		return $texto;
+	}
+	function getCiudades($pais) //devuelve países en forma de opciones para un select
+	{
+		global $url, $usuario, $password, $db;
+		try {
+			$texto = " ";
+			$conn = new PDO('mysql:host='.$url.';dbname='.$db.';charset=utf8', $usuario, $password);
+			$qry = "select distinct ciudad.id, ciudad.nombre from ciudad, sitio where ciudad.id = sitio.ciudad and sitio.pais=".$pais." order by  ciudad.nombre asc;";
+			foreach ($conn->query($qry) as $row) 
+			{
+				$texto = $texto."<option value='".$row['id']."'>".$row['nombre']."</option>";
+			}
+			$conn = null;
+		} catch (PDOException $e) {
+		    print "Error!: " . $e->getMessage() . "<br/>";
+		    die();
+		}
+		echo($texto);
+		return $texto;
+	}
+	function getSitios($cd) //devuelve países en forma de opciones para un select
+	{
+		global $url, $usuario, $password, $db;
+		try {
+			$texto = " ";
+			$conn = new PDO('mysql:host='.$url.';dbname='.$db.';charset=utf8', $usuario, $password);
+			$qry = "select distinct sitio.id, sitio.sitio from  sitio where  sitio.ciudad=".$cd." order by  sitio.sitio asc;";
+			foreach ($conn->query($qry) as $row) 
+			{
+				$texto = $texto."<option value='".$row['id']."'>".$row['sitio']."</option>";
+			}
+			$conn = null;
+		} catch (PDOException $e) {
+		    print "Error!: " . $e->getMessage() . "<br/>";
+		    die();
+		}
+		echo($texto);
+		return $texto;
+	}
 	//Ejemplos de como llamar las funciones:
+	//getSitios(1);
+	//getPaises();
+	//asociaSitio(13,9);
 	//insertaRentaCliente('2013-04-20','2013-04-20',6,1,'D3783645');
 	//precioDia('D3783645');
 	//insertaSucursal("Aragón","57-10-7009","Valle de Tormes 174 Col. Valle de Aragón 3ra Sección","holaalex2204@hotmail.com","superdupi");
