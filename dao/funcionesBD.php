@@ -170,7 +170,6 @@
 		    print "Error!: " . $e->getMessage() . "<br/>";
 		    die();
 		}
-		echo($texto);
 		return $texto;
 	}
 	function getCiudades($pais) //devuelve países en forma de opciones para un select
@@ -189,7 +188,6 @@
 		    print "Error!: " . $e->getMessage() . "<br/>";
 		    die();
 		}
-		echo($texto);
 		return $texto;
 	}
 	function getSitios($cd) //devuelve países en forma de opciones para un select
@@ -208,7 +206,24 @@
 		    print "Error!: " . $e->getMessage() . "<br/>";
 		    die();
 		}
-		echo($texto);
+		return $texto;
+	}
+	function obtenCarrosDisponibles($ini, $fin, $sitio)
+	{
+		global $url, $usuario, $password, $db;
+		try {
+			$texto = " ";
+			$conn = new PDO('mysql:host='.$url.';dbname='.$db.';charset=utf8', $usuario, $password);
+			$qry = "select m.nombre, count(*) as cantidad from modelo m, carro c where  m.id = c.modelo and c.sucursal = (select id_sucursal from sitiosServicio where id_sitio=".$sitio.") and c.noSerie  NOT IN(select distinct r.noSerie from renta r where '".$fin."' BETWEEN r.ini and r.fin or '".$ini."' BETWEEN r.ini and r.fin or r.ini BETWEEN '".$ini."' and '".$fin."' ) and c.status LIKE 'Disponible' group by m.nombre order by m.nombre;";
+			foreach ($conn->query($qry) as $row) 
+			{
+				$texto = $texto." ".$row['nombre'].":".$row['cantidad']."<br>";
+			}
+			$conn = null;
+		} catch (PDOException $e) {
+		    print "Error!: " . $e->getMessage() . "<br/>";
+		    die();
+		}
 		return $texto;
 	}
 	//Ejemplos de como llamar las funciones:
@@ -218,8 +233,9 @@
 	//insertaRentaCliente('2013-04-20','2013-04-20',6,1,'D3783645');
 	//precioDia('D3783645');
 	//insertaSucursal("Aragón","57-10-7009","Valle de Tormes 174 Col. Valle de Aragón 3ra Sección","holaalex2204@hotmail.com","superdupi");
- 	//insertaCarro("D3783645",3,"Manual",1);
+ 	//insertaCarro("D3783687",3,"Manual",1,13);
 	//insertaModelo("Pontiac Matiz",2005,4,18.5,"Compacto","matiz2005.jpg",420);
 	//insertaSitio("México","Distrito Federal", "Central de Autobuses del Sur");
 	//existeUsuario('alex','superdupi');
+	//obtenCarrosDisponibles('2010-11-11','2013-04-19',7);
 ?>
