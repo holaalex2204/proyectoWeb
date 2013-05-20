@@ -29,6 +29,7 @@ CREATE TABLE `carro` (
   `status` enum('Disponible','No Disponible') DEFAULT NULL,
   `transmision` enum('Automatica','Manual') DEFAULT NULL,
   `sucursal` int(11) NOT NULL,
+  `year` int(11) DEFAULT NULL,
   PRIMARY KEY (`noSerie`),
   KEY `modelo` (`modelo`),
   CONSTRAINT `carro_ibfk_1` FOREIGN KEY (`modelo`) REFERENCES `modelo` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
@@ -41,6 +42,7 @@ CREATE TABLE `carro` (
 
 LOCK TABLES `carro` WRITE;
 /*!40000 ALTER TABLE `carro` DISABLE KEYS */;
+INSERT INTO `carro` VALUES ('D3783645',3,'Disponible','Manual',1,NULL);
 /*!40000 ALTER TABLE `carro` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -87,7 +89,7 @@ CREATE TABLE `cliente` (
   `direccion` varchar(250) DEFAULT NULL,
   `nickname` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -96,6 +98,7 @@ CREATE TABLE `cliente` (
 
 LOCK TABLES `cliente` WRITE;
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
+INSERT INTO `cliente` VALUES (1,'hola','Alex','Ortiz',NULL,'superdupi',NULL,NULL,'alex'),(2,'hola','Alex','Ortiz',NULL,'superdupi',NULL,NULL,'alex');
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -109,15 +112,14 @@ DROP TABLE IF EXISTS `modelo`;
 CREATE TABLE `modelo` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(50) DEFAULT NULL,
-  `year` int(11) DEFAULT NULL,
   `capacidadPersonas` int(11) DEFAULT NULL,
   `rendimiento` double(5,2) DEFAULT NULL,
   `categoria` enum('Compacto','Mediano','Deportivo','Lujoso','SUV','Furgoneta','Todo Terreno') DEFAULT NULL,
   `foto` varchar(200) DEFAULT NULL,
   `precioDia` double(5,2) DEFAULT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `nombre` (`nombre`,`year`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+  UNIQUE KEY `nombre` (`nombre`)
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -126,7 +128,7 @@ CREATE TABLE `modelo` (
 
 LOCK TABLES `modelo` WRITE;
 /*!40000 ALTER TABLE `modelo` DISABLE KEYS */;
-INSERT INTO `modelo` VALUES (1,'FIAT 500C',2013,4,15.85,'Compacto',NULL,NULL),(2,'FORK IKON',2013,4,18.00,'Compacto',NULL,NULL);
+INSERT INTO `modelo` VALUES (1,'FIAT 500C',4,15.85,'Compacto',NULL,420.00),(2,'FORK IKON',4,18.00,'Compacto',NULL,420.00),(3,'Pontiac Matiz',4,18.50,'Compacto','matiz2005.jpg',420.00);
 /*!40000 ALTER TABLE `modelo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -151,7 +153,7 @@ CREATE TABLE `pais` (
 
 LOCK TABLES `pais` WRITE;
 /*!40000 ALTER TABLE `pais` DISABLE KEYS */;
-INSERT INTO `pais` VALUES (2,'EUA'),(1,'México');
+INSERT INTO `pais` VALUES (2,'EUA'),(3,'MÃ©xico'),(1,'México');
 /*!40000 ALTER TABLE `pais` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -206,7 +208,7 @@ CREATE TABLE `sitio` (
   KEY `ciudad` (`ciudad`),
   CONSTRAINT `sitio_ibfk_1` FOREIGN KEY (`pais`) REFERENCES `pais` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `sitio_ibfk_2` FOREIGN KEY (`ciudad`) REFERENCES `ciudad` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -215,7 +217,7 @@ CREATE TABLE `sitio` (
 
 LOCK TABLES `sitio` WRITE;
 /*!40000 ALTER TABLE `sitio` DISABLE KEYS */;
-INSERT INTO `sitio` VALUES (7,1,1,'Aeropuerto Internacional de la Ciudad de México'),(5,1,3,'Aeropuerto de Toluca'),(1,1,5,'Centro Histórico'),(4,1,6,'Centro Histórico'),(6,1,7,'Puerto Puerta Maya');
+INSERT INTO `sitio` VALUES (7,1,1,'Aeropuerto Internacional de la Ciudad de México'),(8,1,1,'Central Camionera del Norte'),(5,1,3,'Aeropuerto de Toluca'),(1,1,5,'Centro Histórico'),(4,1,6,'Centro Histórico'),(6,1,7,'Puerto Puerta Maya'),(9,3,1,'Central de Autobuses del Sur');
 /*!40000 ALTER TABLE `sitio` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -256,11 +258,11 @@ CREATE TABLE `sucursal` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(50) NOT NULL,
   `tel` varchar(15) DEFAULT NULL,
-  `direccion` varchar(150) DEFAULT NULL,
+  `direccion` varchar(250) DEFAULT NULL,
   `correo` varchar(150) DEFAULT NULL,
   `pass` varchar(40) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -362,4 +364,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-05-19 18:35:19
+-- Dump completed on 2013-05-20 14:58:53

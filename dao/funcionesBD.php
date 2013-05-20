@@ -37,13 +37,13 @@
 		    die();
 		}
 	}
-	function insertaModelo($modelo, $year,$capPer,$ren,$cat,$foto,$precioDia)
+	function insertaModelo($modelo,$capPer,$ren,$cat,$foto,$precioDia)
 	{
 		global $url, $usuario, $password, $db;
 		try {
 			$conn = new PDO('mysql:host='.$url.';dbname='.$db.';charset=utf8', $usuario, $password);
 			$conn>exec("SET CHARACTER SET utf8");
-			$qry = "INSERT IGNORE INTO ".$db.".modelo  (nombre, year, capacidadPersonas, rendimiento, categoria, foto, precioDia) VALUE ('".$modelo."',".$year.",".$capPer.",".$ren.",'".$cat."','".$foto."',".$precioDia.");";
+			$qry = "INSERT IGNORE INTO ".$db.".modelo  (nombre, capacidadPersonas, rendimiento, categoria, foto, precioDia) VALUE ('".$modelo."',".$capPer.",".$ren.",'".$cat."','".$foto."',".$precioDia.");";
 			$cont = $conn->exec($qry);
 			$conn = null;
 		} catch (PDOException $e) {
@@ -52,13 +52,13 @@
 		}
 		return $cont;
 	}
-	function insertaCarro($noserie, $idmodelo, $transmision,$sucursal)
+	function insertaCarro($noserie, $idmodelo, $transmision,$sucursal,$year)
 	{
 		global $url, $usuario, $password, $db;
 		try {
 			$conn = new PDO('mysql:host='.$url.';dbname='.$db.';charset=utf8', $usuario, $password);
 			$conn>exec("SET CHARACTER SET utf8");
-			$qry = "INSERT IGNORE INTO ".$db.".carro  (noSerie, modelo, status, transmision, sucursal) VALUE ('".$noserie."',".$idmodelo.",'Disponible','".$transmision."',".$sucursal.");";
+			$qry = "INSERT IGNORE INTO ".$db.".carro  (noSerie, modelo, status, transmision, sucursal, year) VALUE ('".$noserie."',".$idmodelo.",'Disponible','".$transmision."',".$sucursal.",".$year.");";
 			$cont = $conn->exec($qry);
 			$conn = null;
 		} catch (PDOException $e) {
@@ -96,7 +96,7 @@
 		}
 		return $cont;
 	}
-	insertaSucursal("Aragón","57-10-7009","Valle de Tormes 174 Col. Valle de Aragón 3ra Sección","holaalex2204@hotmail.com","superdupi");
+	//insertaSucursal("Aragón","57-10-7009","Valle de Tormes 174 Col. Valle de Aragón 3ra Sección","holaalex2204@hotmail.com","superdupi");
  	//insertaCarro("D3783645",3,"Manual",1);
 	//insertaModelo("Pontiac Matiz",2005,4,18.5,"Compacto","matiz2005.jpg",420);
 	//insertaSitio("México","Distrito Federal", "Central de Autobuses del Sur");
