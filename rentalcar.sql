@@ -28,7 +28,6 @@ CREATE TABLE `carro` (
   `modelo` int(11) NOT NULL,
   `status` enum('Disponible','No Disponible') DEFAULT NULL,
   `transmision` enum('Automatica','Manual') DEFAULT NULL,
-  `precioDia` float DEFAULT NULL,
   `sucursal` int(11) NOT NULL,
   PRIMARY KEY (`noSerie`),
   KEY `modelo` (`modelo`),
@@ -115,6 +114,7 @@ CREATE TABLE `modelo` (
   `rendimiento` double(5,2) DEFAULT NULL,
   `categoria` enum('Compacto','Mediano','Deportivo','Lujoso','SUV','Furgoneta','Todo Terreno') DEFAULT NULL,
   `foto` varchar(200) DEFAULT NULL,
+  `precioDia` double(5,2) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `nombre` (`nombre`,`year`)
 ) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
@@ -126,7 +126,7 @@ CREATE TABLE `modelo` (
 
 LOCK TABLES `modelo` WRITE;
 /*!40000 ALTER TABLE `modelo` DISABLE KEYS */;
-INSERT INTO `modelo` VALUES (1,'FIAT 500C',2013,4,15.85,'Compacto',NULL),(2,'FORK IKON',2013,4,18.00,'Compacto',NULL);
+INSERT INTO `modelo` VALUES (1,'FIAT 500C',2013,4,15.85,'Compacto',NULL,NULL),(2,'FORK IKON',2013,4,18.00,'Compacto',NULL,NULL);
 /*!40000 ALTER TABLE `modelo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -362,4 +362,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-05-19 15:23:39
+-- Dump completed on 2013-05-19 18:35:19
