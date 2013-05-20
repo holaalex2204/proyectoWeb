@@ -42,7 +42,7 @@ CREATE TABLE `carro` (
 
 LOCK TABLES `carro` WRITE;
 /*!40000 ALTER TABLE `carro` DISABLE KEYS */;
-INSERT INTO `carro` VALUES ('D3783645',3,'Disponible','Manual',1,NULL);
+INSERT INTO `carro` VALUES ('D3783645',3,'Disponible','Manual',13,2013),('D3783646',3,'Disponible','Manual',13,2013),('D3783647',3,'Disponible','Manual',13,2013),('D3783687',3,'Disponible','Manual',13,2013);
 /*!40000 ALTER TABLE `carro` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -153,7 +153,7 @@ CREATE TABLE `pais` (
 
 LOCK TABLES `pais` WRITE;
 /*!40000 ALTER TABLE `pais` DISABLE KEYS */;
-INSERT INTO `pais` VALUES (2,'EUA'),(3,'MÃ©xico'),(1,'México');
+INSERT INTO `pais` VALUES (1,'México');
 /*!40000 ALTER TABLE `pais` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -165,7 +165,7 @@ DROP TABLE IF EXISTS `renta`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `renta` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `ini` date NOT NULL,
   `fin` date NOT NULL,
   `importe` int(11) DEFAULT NULL,
@@ -179,7 +179,7 @@ CREATE TABLE `renta` (
   CONSTRAINT `renta_ibfk_1` FOREIGN KEY (`id_sitio`) REFERENCES `sitio` (`id`),
   CONSTRAINT `renta_ibfk_2` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`id`),
   CONSTRAINT `renta_ibfk_3` FOREIGN KEY (`noSerie`) REFERENCES `carro` (`noSerie`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -188,6 +188,7 @@ CREATE TABLE `renta` (
 
 LOCK TABLES `renta` WRITE;
 /*!40000 ALTER TABLE `renta` DISABLE KEYS */;
+INSERT INTO `renta` VALUES (6,'2013-04-20','2013-04-25',2100,6,1,'D3783645'),(8,'2013-04-20','2013-04-20',420,6,1,'D3783645'),(9,'2013-04-20','2013-04-20',420,6,1,'D3783645'),(10,'2013-04-20','2013-04-25',2100,6,1,'D3783687');
 /*!40000 ALTER TABLE `renta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -217,7 +218,7 @@ CREATE TABLE `sitio` (
 
 LOCK TABLES `sitio` WRITE;
 /*!40000 ALTER TABLE `sitio` DISABLE KEYS */;
-INSERT INTO `sitio` VALUES (7,1,1,'Aeropuerto Internacional de la Ciudad de México'),(8,1,1,'Central Camionera del Norte'),(5,1,3,'Aeropuerto de Toluca'),(1,1,5,'Centro Histórico'),(4,1,6,'Centro Histórico'),(6,1,7,'Puerto Puerta Maya'),(9,3,1,'Central de Autobuses del Sur');
+INSERT INTO `sitio` VALUES (7,1,1,'Aeropuerto Internacional de la Ciudad de México'),(8,1,1,'Central Camionera del Norte'),(5,1,3,'Aeropuerto de Toluca'),(1,1,5,'Centro Histórico'),(4,1,6,'Centro Histórico'),(6,1,7,'Puerto Puerta Maya');
 /*!40000 ALTER TABLE `sitio` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -244,6 +245,7 @@ CREATE TABLE `sitiosServicio` (
 
 LOCK TABLES `sitiosServicio` WRITE;
 /*!40000 ALTER TABLE `sitiosServicio` DISABLE KEYS */;
+INSERT INTO `sitiosServicio` VALUES (13,7);
 /*!40000 ALTER TABLE `sitiosServicio` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -262,7 +264,7 @@ CREATE TABLE `sucursal` (
   `correo` varchar(150) DEFAULT NULL,
   `pass` varchar(40) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=utf8;
+) ENGINE=InnoDB AUTO_INCREMENT=14 DEFAULT CHARSET=utf8;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -271,6 +273,7 @@ CREATE TABLE `sucursal` (
 
 LOCK TABLES `sucursal` WRITE;
 /*!40000 ALTER TABLE `sucursal` DISABLE KEYS */;
+INSERT INTO `sucursal` VALUES (13,'Aragón','57-10-7009','Valle de Tormes 174 Col. Valle de Aragón 3ra Sección','holaalex2204@hotmail.com','superdupi');
 /*!40000 ALTER TABLE `sucursal` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -364,4 +367,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-05-20 14:58:53
+-- Dump completed on 2013-05-20 18:06:54
