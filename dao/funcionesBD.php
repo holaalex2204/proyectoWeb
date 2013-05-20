@@ -98,8 +98,7 @@
 		}
 		return $cont;
 	}
-	insertaSucursal("Aragon","57-10-70-09","Av. Hank González No. 30 Colonia Valle de Aragón 3ra Sección. Mpio Ecatepec Estado de México","aragon@rentalcar.com","superdupi");
-	//insertaCarro("D3783645",3,"Manual",1);
+le 	//insertaCarro("D3783645",3,"Manual",1);
 	//insertaModelo("Pontiac Matiz",2005,4,18.5,"Compacto","matiz2005.jpg",420);
 	//insertaSitio("México","Distrito Federal", "Central de Autobuses del Sur");
 	//existeUsuario('alex','superdupi');
