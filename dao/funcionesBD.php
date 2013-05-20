@@ -96,6 +96,67 @@
 		}
 		return $cont;
 	}
+	function precioDia($noSerie) //Devuelve el precio por día al que es rentado un carro.
+	{
+		global $url, $usuario, $password, $db;
+		try {
+			$conn = new PDO('mysql:host='.$url.';dbname='.$db.';charset=utf8', $usuario, $password);
+			$qry = "SELECT precioDia from carro, modelo where carro.noSerie LIKE '".$noSerie."' AND carro.modelo = modelo.id;";
+			foreach ($conn->query($qry) as $row) 
+			{
+        				return $row['precioDia'];
+			}
+		
+		} catch (PDOException $e) 
+		{
+		    print "Error!: " . $e->getMessage() . "<br/>";
+		    die();
+		}
+		return $cont;
+	}
+	function insertaRentaCliente($ini,$fin,$sitio,$cliente,$noserie) // retorna el importe y el formato de la fecha de ini y fin son //aaaa-mm-dd
+	{
+		global $url, $usuario, $password, $db;
+		try {
+			$conn = new PDO('mysql:host='.$url.';dbname='.$db.';charset=utf8', $usuario, $password);
+			$qry = "INSERT INTO renta (ini, fin, importe, id_sitio, id_cliente, noSerie)  VALUE ('".$ini."','".$fin."',(ABS(DATEDIFF('".$ini."','".$fin."')+1)*".precioDia($noserie)."),".$sitio.",".$cliente.",'".$noserie."');";
+			echo($qry);
+			$cont = $conn->exec($qry);
+			if($cont ==1)
+			{
+				foreach ($conn->query("SELECT (ABS(DATEDIFF('".$ini."','".$fin."')+1)*".precioDia($noserie).") as f") as $row) 
+				{
+					echo( $row['f']);
+        					$cont = $row['f'];
+				}
+
+			}
+			$conn = null;
+		} catch (PDOException $e) 
+		{
+		    print "Error!: " . $e->getMessage() . "<br/>";
+		    die();
+		}
+		return $cont;
+	}
+	function asociaSitio($sucursal, $sitio)
+	{
+		global $url, $usuario, $password, $db;
+		try {
+			$conn = new PDO('mysql:host='.$url.';dbname='.$db.';charset=utf8', $usuario, $password);
+			$qry = "INSERT INTO sitiosServicio (id_sucursal, id_sitio)  VALUE (".$sucursal.",".$sitio.");";
+			echo($qry);
+			$cont = $conn->exec($qry);
+			$conn = null;
+		} catch (PDOException $e) {
+		    print "Error!: " . $e->getMessage() . "<br/>";
+		    die();
+		}
+		return $cont;
+	}
+	//Ejemplos de como llamar las funciones:
+	//insertaRentaCliente('2013-04-20','2013-04-20',6,1,'D3783645');
+	//precioDia('D3783645');
 	//insertaSucursal("Aragón","57-10-7009","Valle de Tormes 174 Col. Valle de Aragón 3ra Sección","holaalex2204@hotmail.com","superdupi");
  	//insertaCarro("D3783645",3,"Manual",1);
 	//insertaModelo("Pontiac Matiz",2005,4,18.5,"Compacto","matiz2005.jpg",420);
