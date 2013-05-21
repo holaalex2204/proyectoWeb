@@ -226,6 +226,23 @@
 		}
 		return $texto;
 	}
+	function existeSucursal($nickname, $pass)
+	{
+		global $url, $usuario, $password, $db;
+		try {
+			$conn = new PDO('mysql:host='.$url.';dbname='.$db.';charset=utf8', $usuario, $password);
+			$conn>exec("SET CHARACTER SET utf8");
+			$qry = "SELECT sucursal.id from sucursal  where   nombre LIKE CONCAT('%','".$nickname."','%') and   pass  LIKE CONCAT('%','".$pass."','%');";
+			foreach ($conn->query($qry) as $row) 
+			{
+        				return $row['id'];
+			}
+			$conn = null;
+		} catch (PDOException $e) {
+		    print "Error!: " . $e->getMessage() . "<br/>";
+		    die();
+		}
+	}
 	//Ejemplos de como llamar las funciones:
 	//getSitios(1);
 	//getPaises();
