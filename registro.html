@@ -19,33 +19,6 @@
    		<script type="text/javascript" src="js/html5.js"></script>
     	<link rel="stylesheet" type="text/css" media="screen" href="css/ie.css">
 	<![endif]-->
-    <script type="text/JavaScript">
-<!--
-function MM_findObj(n, d) { //v4.01
-  var p,i,x;  if(!d) d=document; if((p=n.indexOf("?"))>0&&parent.frames.length) {
-    d=parent.frames[n.substring(p+1)].document; n=n.substring(0,p);}
-  if(!(x=d[n])&&d.all) x=d.all[n]; for (i=0;!x&&i<d.forms.length;i++) x=d.forms[i][n];
-  for(i=0;!x&&d.layers&&i<d.layers.length;i++) x=MM_findObj(n,d.layers[i].document);
-  if(!x && d.getElementById) x=d.getElementById(n); return x;
-}
-
-function MM_validateForm() { //v4.0
-  var i,p,q,nm,test,num,min,max,errors='',args=MM_validateForm.arguments;
-  for (i=0; i<(args.length-2); i+=3) { test=args[i+2]; val=MM_findObj(args[i]);
-    if (val) { nm=val.name; if ((val=val.value)!="") {
-      if (test.indexOf('isEmail')!=-1) { p=val.indexOf('@');
-        if (p<1 || p==(val.length-1)) errors+='- '+nm+' must contain an e-mail address.\n';
-      } else if (test!='R') { num = parseFloat(val);
-        if (isNaN(val)) errors+='- '+nm+' must contain a number.\n';
-        if (test.indexOf('inRange') != -1) { p=test.indexOf(':');
-          min=test.substring(8,p); max=test.substring(p+1);
-          if (num<min || max<num) errors+='- '+nm+' must contain a number between '+min+' and '+max+'.\n';
-    } } } else if (test.charAt(0) == 'R') errors += '- '+nm+' is required.\n'; }
-  } if (errors) alert('The following error(s) occurred:\n'+errors);
-  document.MM_returnValue = (errors == '');
-}
-//-->
-    </script>
 </head>
 <body>
   <!--==============================header=================================-->
@@ -73,30 +46,20 @@ function MM_validateForm() { //v4.0
                 
                 <div class="col-16">
                     <h2 class="h2 p2">Registro:</h2>
-					<form method="post" name="form" id="form" >
+					<form id="form" method="post" >
                       <fieldset>
-                        <label onFocus="MM_validateForm('nomb','','R');MM_validateForm('ap','','R','tel','','R','dir','','R','usu','','R');return document.MM_returnValue" name="nombre">
-                      <input type="text" name="nomb" value="Nombre" onBlur="if(this.value=='') this.value='Nombre'" onFocus="if(this.value =='Nombre' ) this.value=''" required="required"></label>
-                        <label name="apellidos">
-                      <input type="text" name="edad" value="Edad" onBlur="if(this.value=='') this.value='Edad'" onFocus="if(this.value =='Edad' ) this.value=''"></label>
-					  <input type="text" name="ap" value="Apellidos" onBlur="if(this.value=='') this.value='Apellidos'" onFocus="if(this.value =='Apellidos' ) this.value=''" required="required"></label>
-						<label name="telefono">
-					  <input type="text" name="tel" value="telefono" onBlur="if(this.value=='') this.value='telefono'" onFocus="if(this.value =='telefono' ) this.value=''" required="required"></label>
-                        <label name="direccion">
-                      <input type="text" name="dir" value="Dirección" onBlur="if(this.value=='') this.value='Dirección'" onFocus="if(this.value =='Dirección' ) this.value=''" required="required"></label>
-						<label name="mail">
-					  <input type="email" name="mail"value="Mail" onBlur="if(this.value=='') this.value='Mail'" onFocus="if(this.value =='Mail' ) this.value=''" required="required"></label>
-					
-					<label name="usuario">
-					<input type="text" name="usu" value="Nombre de usuario" onBlur="if(this.value=='') this.value='Nombre de usuario'" onFocus="if(this.value =='Nombre de usuario' ) this.value=''"></label><br>
-					Contraseña<input type="password" name="contraseña" required="required"/><br>
-					Repetir Contraseña<input type="password" name="vercontraseña" required="required"/><br>
-					Subir tu foto de perfil (opcipnal)<input type="file" name="imag"/> <br><br><br><br>
-					<input type="submit" name="EnviarDatos" value="Registrarse" />
+                        <label><input type="text" value="Nombre" onBlur="if(this.value=='') this.value='Nombre'" onFocus="if(this.value =='Nombre' ) this.value=''"></label>
+                        <label><input type="text" value="Apellidos" onBlur="if(this.value=='') this.value='Apellidos'" onFocus="if(this.value =='Apellidos' ) this.value=''"></label>
+						<label><input type="text" value="telefono" onBlur="if(this.value=='') this.value='telefono'" onFocus="if(this.value =='telefono' ) this.value=''"></label>
+                        <label><input type="text" value="Dirección" onBlur="if(this.value=='') this.value='Dirección'" onFocus="if(this.value =='Dirección' ) this.value=''"></label>
+						<label><input type="text" value="Mail" onBlur="if(this.value=='') this.value='Mail'" onFocus="if(this.value =='Mail' ) this.value=''"></label>
+						<label><input type="text" value="Nombre de usuario" onBlur="if(this.value=='') this.value='Nombre de usuario'" onFocus="if(this.value =='Nombre de usuario' ) this.value=''"></label>
+						<label><input type="text" value="Password" onBlur="if(this.value=='') this.value='Password'" onFocus="if(this.value =='Password' ) this.value=''"></label>
+
 
                         <div class="btns"><a href="#" class="link-1" onClick="document.getElementById('form').submit()">Registrar Auto</a></div>
                       </fieldset>  
-                  </form> 
+                    </form> 
                 </div>
             </div>
         </div>           

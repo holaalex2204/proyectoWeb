@@ -49,10 +49,10 @@
                     <h2 class="h2 p2">Iniciar sesión:</h2>
 					<form id="form" method="post" >
                       <fieldset>
-                        Nombre de Usuario<label><input type="text" name="nomusu" required="required"/></label>
-                        Contraseña<label><input type="password" name="ingcontra" required="required"/></label><br>
+                        <label><input type="text" value="Nombre de usuario" onBlur="if(this.value=='') this.value='Nombre de usuario'" onFocus="if(this.value =='Nombre de usuario' ) this.value=''"></label>
+                        <label><input type="text" value="Password" onBlur="if(this.value=='') this.value='Password'" onFocus="if(this.value =='Password' ) this.value=''"></label>
 			
-					<input type="submit" name="inicic" value="Iniciar Sesión" />
+
                         <div class="btns"><a href="#" class="link-1" onClick="document.getElementById('form').submit()">Iniciar sesión</a></div>
                       </fieldset>  
                     </form> 
