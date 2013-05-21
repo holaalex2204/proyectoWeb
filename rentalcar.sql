@@ -16,10 +16,19 @@
 /*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
 
 --
+-- Current Database: `rentalcar`
+--
+
+/*!40000 DROP DATABASE IF EXISTS `rentalcar`*/;
+
+CREATE DATABASE /*!32312 IF NOT EXISTS*/ `rentalcar` /*!40100 DEFAULT CHARACTER SET latin1 */;
+
+USE `rentalcar`;
+
+--
 -- Table structure for table `carro`
 --
-CREATE DATABASE `rentalcar`;
-USE `rentalcar`;
+
 DROP TABLE IF EXISTS `carro`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
@@ -83,13 +92,14 @@ CREATE TABLE `cliente` (
   `correo` varchar(100) DEFAULT NULL,
   `nombre` varchar(45) DEFAULT NULL,
   `app` varchar(45) DEFAULT NULL,
-  `apm` varchar(45) DEFAULT NULL,
   `pass` varchar(40) DEFAULT NULL,
   `telefono` varchar(12) DEFAULT NULL,
   `direccion` varchar(250) DEFAULT NULL,
   `nickname` varchar(50) DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+  `foto` varchar(100) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `correo` (`correo`)
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -98,7 +108,7 @@ CREATE TABLE `cliente` (
 
 LOCK TABLES `cliente` WRITE;
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-INSERT INTO `cliente` VALUES (1,'hola','Alex','Ortiz',NULL,'superdupi',NULL,NULL,'alex'),(2,'hola','Alex','Ortiz',NULL,'superdupi',NULL,NULL,'alex');
+INSERT INTO `cliente` VALUES (4,'holaalex2204@hotmail.com','alex','ortiz','superdupi','57107009','valle de tormes 174','holaalex2204','/guapo.jpg');
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -114,7 +124,7 @@ CREATE TABLE `modelo` (
   `nombre` varchar(50) DEFAULT NULL,
   `capacidadPersonas` int(11) DEFAULT NULL,
   `rendimiento` double(5,2) DEFAULT NULL,
-  `categoria` enum('Compacto','Mediano','Deportivo','Lujoso','SUV','Furgoneta','Todo Terreno') DEFAULT NULL,
+  `categoria` enum('Compacto','Mediano','Deportivo','Lujoso','SUV') DEFAULT NULL,
   `foto` varchar(200) DEFAULT NULL,
   `precioDia` double(5,2) DEFAULT NULL,
   PRIMARY KEY (`id`),
@@ -140,11 +150,11 @@ DROP TABLE IF EXISTS `pais`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `pais` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `nombre` varchar(50) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `nombre` (`nombre`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -153,7 +163,7 @@ CREATE TABLE `pais` (
 
 LOCK TABLES `pais` WRITE;
 /*!40000 ALTER TABLE `pais` DISABLE KEYS */;
-INSERT INTO `pais` VALUES (1,'México');
+INSERT INTO `pais` VALUES (2,'Colombia'),(3,'EUA'),(1,'México');
 /*!40000 ALTER TABLE `pais` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -188,7 +198,6 @@ CREATE TABLE `renta` (
 
 LOCK TABLES `renta` WRITE;
 /*!40000 ALTER TABLE `renta` DISABLE KEYS */;
-INSERT INTO `renta` VALUES (6,'2013-04-20','2013-04-25',2100,6,1,'D3783645'),(8,'2013-04-20','2013-04-20',420,6,1,'D3783645'),(9,'2013-04-20','2013-04-20',420,6,1,'D3783645'),(10,'2013-04-20','2013-04-25',2100,6,1,'D3783687');
 /*!40000 ALTER TABLE `renta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -209,7 +218,7 @@ CREATE TABLE `sitio` (
   KEY `ciudad` (`ciudad`),
   CONSTRAINT `sitio_ibfk_1` FOREIGN KEY (`pais`) REFERENCES `pais` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `sitio_ibfk_2` FOREIGN KEY (`ciudad`) REFERENCES `ciudad` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -367,4 +376,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-05-20 18:06:54
+-- Dump completed on 2013-05-21 17:39:54

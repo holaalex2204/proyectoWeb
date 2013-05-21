@@ -1,4 +1,5 @@
 <?php
+	include("dao/funcionesBD.php");
 	session_start();
 	$user=null;
 	$session=false;
@@ -10,6 +11,33 @@
 	drawHeader("Galeria",null,1,$user);
 ?>
 <body>  
+<link href="css/valida.css" rel="stylesheet" type="text/css" />
+<SCRIPT>
+	function actualizaCiudad(str)
+		{
+			alert("dao/funcionesDB.php?funcion=getCiudades&idpais="+str);
+			if (window.XMLHttpRequest)
+			{// code for IE7+, Firefox, Chrome, Opera, Safari
+				xmlhttp=new XMLHttpRequest();
+			}
+			else
+			{// code for IE6, IE5
+				xmlhttp=new ActiveXObject("Microsoft.XMLHTTP");
+			}
+			
+			xmlhttp.onreadystatechange=function()
+  			{
+				if (xmlhttp.readyState==4 && xmlhttp.status==200)
+    				{
+					//document.getElementById("ciudad").innerHTML = xmlhttp.responseText;
+					alert(xmlhttp.responseText);
+    				}
+  			}
+			xmlhttp.open("GET","dao/funcionesDB.php?funcion=getCiudades&idpais="+str,true);
+			xmlhttp.send();
+		}	
+</SCRIPT>
+
 <!--==============================content================================-->
     <section id="content"><div class="ic"></div>
     	<div class="pad-1">
@@ -17,28 +45,21 @@
             <div class="page6-row1">
                 
                 <div class="col-16">
-                    <h2 class="h2 p2">Ingresa los siguientes datos:</h2>
-					<form id="form" method="post" action="rentaCliente.php">
-                      <fieldset>
-                        
-						Edad del Conductor<label><input type="number" name="edad" min="18" max="65" required="required"></label><br>
-
-
-						Fecha de Contratación<label><input type="date" name="contrata" required="required"></label><br>
-						Fecha de Entrega<label><input type="date" name="entrega" required="required"></label><br>
-						Lugar de Entrega<label><select size="1" name="modelo"><br>
-						<option selected="selected" required="required">Tacuba D.F.</option>
-						<option></option>
-						</select> 
-						</label>
-					
-						<input type="submit" name="EnviarDatos" value="Registrarse" />
-                        <div class="btns"><a href="#" class="link-1" onClick="document.getElementById('form').submit()">Rentar Auto</a></div>
-                      </fieldset>  
-                     
+                    <h2 class="h2 p2">Renta de Autos:</h2>
+				<form id="form" method="post" action="rentaSucursal.php">
+					<ul>
+						<li>	<label>Fecha de Inicio</label><input type="date" name="inicio" required="required"></li>
+						<li>	<label>Fecha de Entrega</label><input type="date" name="fin" required="required"></li>
+						<li>	<label>Lugar de Entrega</label></li>
+						<li>	<select size="1" name="pais" onload="actualizaCiudad(this.value)" onchange="actualizaCiudad(this.value)"><?php echo(getPaises());?></select> </li>
+						<li>	<select size="1" name="ciudad" onchange="actualizaSitio(this.value)"></select> </li>
+						<li>	<select size="1" name="sitio"></select> 					</li>						
+					</ul>
+					<input type="submit" value="Ver Opciones" />
+                     		</form>
                 </div>
             </div>
-			</form>
+			
         </div>           
     </section> 
 <!--==============================footer=================================-->

@@ -309,6 +309,11 @@
 		    return 0;
 		}
 	}
+	$funcion=$_GET['funcion'];
+	if($funcion == "getCiudades")
+	{
+		echo(getCiudades($_GET['idpais']));
+	}
 	//Ejemplos de como llamar las funciones:
 	//hayDuplicidad('asdf');
 	//getSucursal(13);
