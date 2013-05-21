@@ -9,14 +9,22 @@
 	{
 		global $url, $usuario, $password, $db;
 		try {
-			$conn = new PDO('mysql:host='.$url.';dbname='.$db.';charset=utf8', $usuario, $password);
-			$conn>exec("SET CHARACTER SET utf8");
-			$qry = "INSERT INTO ".$db.".cliente  (correo, nombre, app, pass, telefono, direccion, nickname) VALUE ('".$mail."','".$nombre."','".$apellidos."','".$pass."','".$tel."','".$direccion."','".$nickname."');";
-			$cont = $conn->exec($qry);
-			$conn = null;
+			
+			if(existeSucursal($nickname,$pass)==0)
+			{
+				$conn = new PDO('mysql:host='.$url.';dbname='.$db.';charset=utf8', $usuario, $password);
+				$conn>exec("SET CHARACTER SET utf8");
+				$qry = "INSERT INTO ".$db.".cliente  (correo, nombre, app, pass, telefono, direccion, nickname) VALUE ('".$mail."','".$nombre."','".$apellidos."','".$pass."','".$tel."','".$direccion."','".$nickname."');";
+				$cont = $conn->exec($qry);
+				$conn = null;
+			}
+			else
+			{
+				return 0;
+			}
+
 		} catch (PDOException $e) {
 		    print "Error!: " . $e->getMessage() . "<br/>";
-		    die();
 		}
 		return $cont;
 	}	
@@ -29,12 +37,14 @@
 			$qry = "SELECT ".$db.".cliente.id from ".$db.".cliente  where   ".$db.".cliente.nickname LIKE CONCAT('%','".$nickname."','%') and   ".$db.".cliente.pass  LIKE CONCAT('%','".$pass."','%');";
 			foreach ($conn->query($qry) as $row) 
 			{
+				$conn = null;
         				return $row['id'];
 			}
-			$conn = null;
-		} catch (PDOException $e) {
+			
+		} catch (PDOException $e) 
+		{
 		    print "Error!: " . $e->getMessage() . "<br/>";
-		    die();
+			return 0;
 		}
 	}
 	function insertaModelo($modelo,$capPer,$ren,$cat,$foto,$precioDia)
@@ -104,6 +114,7 @@
 			$qry = "SELECT precioDia from carro, modelo where carro.noSerie LIKE '".$noSerie."' AND carro.modelo = modelo.id;";
 			foreach ($conn->query($qry) as $row) 
 			{
+				$conn = null;
         				return $row['precioDia'];
 			}
 		
@@ -126,7 +137,6 @@
 			{
 				foreach ($conn->query("SELECT (ABS(DATEDIFF('".$ini."','".$fin."')+1)*".precioDia($noserie).") as f") as $row) 
 				{
-					echo( $row['f']);
         					$cont = $row['f'];
 				}
 
@@ -135,7 +145,7 @@
 		} catch (PDOException $e) 
 		{
 		    print "Error!: " . $e->getMessage() . "<br/>";
-		    die();
+			return "nada";
 		}
 		return $cont;
 	}
@@ -240,7 +250,7 @@
 			$conn = null;
 		} catch (PDOException $e) {
 		    print "Error!: " . $e->getMessage() . "<br/>";
-		    die();
+		    return 0;
 		}
 	}
 	//Ejemplos de como llamar las funciones:
