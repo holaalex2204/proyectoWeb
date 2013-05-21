@@ -42,67 +42,32 @@
 <!--==============================content================================-->
     <section id="content"><div class="ic"></div>
     	<div class="pad-1">
+		
             <div class="page6-row1">
                 
                 <div class="col-16">
                     <h2 class="h2 p2">Ingresa los siguientes datos:</h2>
 					<form id="form" method="post" >
                       <fieldset>
-                        <label><input type="text" value="Nombre" onBlur="if(this.value=='') this.value='Nombre'" onFocus="if(this.value =='Nombre' ) this.value=''"></label>
-                        <label><input type="text" value="Apellidos" onBlur="if(this.value=='') this.value='Apellidos'" onFocus="if(this.value =='Apellidos' ) this.value=''"></label>
-						<label><input type="text" value="telefono" onBlur="if(this.value=='') this.value='telefono'" onFocus="if(this.value =='telefono' ) this.value=''"></label>
-                        <label><input type="text" value="Dirección" onBlur="if(this.value=='') this.value='Dirección'" onFocus="if(this.value =='Dirección' ) this.value=''"></label>
-						<label><input type="text" value="fecha de renta dd/mm/aaaa" onBlur="if(this.value=='') this.value='fecha de renta dd/mm/aaaa'" onFocus="if(this.value =='fecha de renta dd/mm/aaaa' ) this.value=''"></label>
-						<label><input type="text" value="fecha de entrega dd/mm/aaaa" onBlur="if(this.value=='') this.value='fecha de entrega dd/mm/aaaa'" onFocus="if(this.value =='fecha de entrega dd/mm/aaaa' ) this.value=''"></label>
-						Modelo de auto<label><select size="1" name="modelo">
-						<option selected="selected">-</option>
-						<option>Chevy</option>
-						<option>Tsuru</option>
-						<option>Spark</option>
-						<option>Golf</option>
-						<option>Jetta Bicentenario</option>
-						<option>Bora sport</option>
-						<option>Audi A6</option>
-						<option>Honda CRV</option>
-						<option>Honda City</option>
-						<option>Aveo</option>
-						<option>Avenger</option>
-						<option>Mazda 6</option>
-						<option>Lancer</option>
-						<option>Captiva</option>
-						<option>Mercedes Benz CLK</option>
-						<option>BMW 325i</option>
-						<option>Patriot</option>
-						<option>Renault Clio</option>
-						<option>Mustang Shelby</option>
-						<option>Challenger</option>
-						<option>Camaro</option>
-						<option>Charger</option>
-						<option>Corvette Z06</option>
-						<option>Escape</option>
-						<option>SEAT Leon</option>
-						<option>Audi A3</option>
-						<option>Pegout 206</option>
-						<option>Suzuki swift</option>
-						<option>mini cooper</option>
-						<option>Chevrolet Astra</option>
+                        
+						Edad del Conductor<label><input type="number" name="edad" min="18" max="65" required="required"></label><br>
+
+
+						Fecha de Contratación<label><input type="date" name="contrata" required="required"></label><br>
+						Fecha de Entrega<label><input type="date" name="entrega" required="required"></label><br>
+						Lugar de Entrega<label><select size="1" name="modelo"><br>
+						<option selected="selected" required="required">Tacuba D.F.</option>
+						<option></option>
 						</select> 
 						</label>
-						Año <label><select size="1" name="año">
-						<option selected="selected">-</option>
-						<option>2009</option>
-						<option>2010</option>
-						<option>2011</option>
-						<option>2012</option>
-						<option>2013</option>
-						</select>
-						</label>
-						
+					
+						<input type="submit" name="EnviarDatos" value="Registrarse" />
                         <div class="btns"><a href="#" class="link-1" onClick="document.getElementById('form').submit()">Rentar Auto</a></div>
                       </fieldset>  
-                    </form> 
+                     
                 </div>
             </div>
+			</form>
         </div>           
     </section> 
 <!--==============================footer=================================-->
