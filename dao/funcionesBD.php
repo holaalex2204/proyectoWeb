@@ -34,7 +34,7 @@
 		try {
 			$conn = new PDO('mysql:host='.$url.';dbname='.$db.';charset=utf8', $usuario, $password);
 			$conn>exec("SET CHARACTER SET utf8");
-			$qry = "SELECT ".$db.".cliente.id from ".$db.".cliente  where   ".$db.".cliente.nickname LIKE CONCAT('%','".$nickname."','%') and   ".$db.".cliente.pass  LIKE CONCAT('%','".$pass."','%');";
+			$qry = "SELECT cliente.id from cliente  where   cliente.nickname LIKE CONCAT('%','".$nickname."','%') and   ".$db.".cliente.pass  LIKE CONCAT('%','".$pass."','%');";
 			foreach ($conn->query($qry) as $row) 
 			{
 				$conn = null;
