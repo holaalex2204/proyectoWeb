@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <title>Renta Auto</title>
-    <meta charset="utf-8">
+    <meta Content-Type: text/html; charset=UTF-8>
     <link rel="stylesheet" type="text/css" media="screen" href="css/reset.css">
     <link rel="stylesheet" type="text/css" media="screen" href="css/style.css">
     <link href='http://fonts.googleapis.com/css?family=Cabin+Sketch:400,700' rel='stylesheet' type='text/css'>
@@ -28,11 +28,11 @@
             <nav>  
                 <ul class="menu">
                     <li class="li-none"><a href="index.html">Inicio</a></li>
-                    <li><a href="contacto.html">Contacto</a></li>
+                    <li><a href="contacto.html">Ingresar Modelo</a></li>
                     <li><a href="portfolio.html">Galería</a></li>
-                    <li><a href="news.html">Términos y Condiciones</a></li>
-                    <li class="current"><a href="contacts.html">Rentar Auto</a></li>
-					<li href="services.html"><a href="services.html">Perfil</a></li>
+                    <li><a href="news.html">Ingresar Modelo</a></li>
+                    <li class="current"><a href="altacarro.html">Registra Auto</a></li>
+					
                 </ul>
                 <h1><a href="index.html"><img src="images/logo.png" alt=""></a></h1>
             </nav>
@@ -50,19 +50,32 @@
 					<form id="form" method="post" >
                       <fieldset>
                         
-						Edad del Conductor<label><input type="number" name="edad" min="18" max="65" required="required"></label><br>
+						Número de Serie<label><input type="text" name="nserie"  maxlength="17" required="required"></label><br>
 
 
-						Fecha de Contratación<label><input type="date" name="contrata" required="required"></label><br>
-						Fecha de Entrega<label><input type="date" name="entrega" required="required"></label><br>
-						Lugar de Entrega<label><select size="1" name="modelo"><br>
-						<option selected="selected" required="required">Tacuba D.F.</option>
-						<option></option>
+						Modelo<label><input type="text" name="modelo" required="required"></label><br>
+						Status<label><input type="text" name="status" required="required"></label><br>
+						Transmisión<label><select size="1" name="transmision"><br>
+						<option selected="selected" required="required">-</option>
+						<option>Manual</option>
+						<option>Automática</option>
+						<option>CVT</option>
+						<option>Tiptronic</option>
+						
 						</select> 
 						</label>
-					
+					sucursal <label><select size="1" name="sucursal"><br>
+						<option selected="selected" required="required">-</option>
+						<option>A</option>
+						<option>B</option>
+						<option>C</option>
+						<option>D</option>
+						
+						</select> 
+						</label>
+					año<label><input type="number" name="año" required="required" min="2009" max="2013"></label><br>
 						<input type="submit" name="EnviarDatos" value="Registrarse" />
-                        <div class="btns"><a href="#" class="link-1" onClick="document.getElementById('form').submit()">Rentar Auto</a></div>
+                        <div class="btns"><a href="#" class="link-1" onClick="document.getElementById('form').submit()">Aceptar</a></div>
                       </fieldset>  
                      
                 </div>
