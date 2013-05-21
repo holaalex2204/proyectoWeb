@@ -41,7 +41,7 @@
                 </li>
 				<li>
                       <label for="nombre">Nickname</label>
-                      <input type="text" name="nickname" id="nickname" placeholder="alex" required="required" autofocus="autofocus" maxlength="50"/>
+                      <input type="text" name="nickname" id="nickname" placeholder="nickname" required="required" autofocus="autofocus" maxlength="50"/>
                   </li>
                   <li>
                         <label for="pass">Password</label>
