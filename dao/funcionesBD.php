@@ -2,19 +2,74 @@
 	header('Content-Type: text/html; charset=UTF-8');
 	$url = "localhost";
 	$usuario = "root";
-	$password = "n0m3l0s3";
+	$password = "root";
 	$db = "rentalcar";
-
-	function insertaUsuario($nombre,  $apellidos, $tel, $direccion, $mail, $nickname, $pass)
+	function getSucursal($id)
 	{
 		global $url, $usuario, $password, $db;
 		try {
-			
-			if(existeSucursal($nickname,$pass)==0)
+			$conn = new PDO('mysql:host='.$url.';dbname='.$db.';charset=utf8', $usuario, $password);
+			$conn>exec("SET CHARACTER SET utf8");
+			$qry = "SELECT * from  sucursal  where  sucursal.id = ".$id.";";
+			$result = $conn->query($qry)->fetch(PDO::FETCH_ASSOC);
+			print_r($result);
+			return result;
+		} catch (PDOException $e) 
+		{
+		    print "Error!: " . $e->getMessage() . "<br/>";
+			return 0;
+		}
+	}
+	function getCliente($id)
+	{
+		global $url, $usuario, $password, $db;
+		try {
+			$conn = new PDO('mysql:host='.$url.';dbname='.$db.';charset=utf8', $usuario, $password);
+			$conn>exec("SET CHARACTER SET utf8");
+			$qry = "SELECT * from  cliente  where  cliente.id = ".$id.";";
+			$result = $conn->query($qry)->fetch(PDO::FETCH_ASSOC);
+			//print_r($result);
+			return result;
+		} catch (PDOException $e) 
+		{
+		    print "Error!: " . $e->getMessage() . "<br/>";
+			return 0;
+		}
+	}
+	function sinDuplicidad($nickname)
+	{
+		global $url, $usuario, $password, $db;
+		try {
+			$conn = new PDO('mysql:host='.$url.';dbname='.$db.';charset=utf8', $usuario, $password);
+			$qry = "SELECT count(*) as c from cliente  where cliente.nickname LIKE '".$nickname."';";
+			$row = $conn->query($qry)->fetch();
+			$suma = $row['c'];
+			$conn = null;
+			$conn = new PDO('mysql:host='.$url.';dbname='.$db.';charset=utf8', $usuario, $password);
+			$qry = "SELECT count(*) as c from sucursal  where sucursal.nombre LIKE '".$nickname."';";
+			$row2 =$conn->query($qry)->fetch(); 
+			$suma = $suma + $row2['c'];
+			$conn = null;
+			if($suma >0)
+			{
+				return false;
+			}
+			return true;
+		} 
+		catch (PDOException $e) 
+		{
+		    print "Error!: " . $e->getMessage() . "<br/>";
+		}
+	}
+	function insertaUsuario($nombre,  $apellidos, $tel, $direccion, $mail, $nickname, $pass, $foto)
+	{
+		global $url, $usuario, $password, $db;
+		try {
+			if(sinDuplicidad($nickname))
 			{
 				$conn = new PDO('mysql:host='.$url.';dbname='.$db.';charset=utf8', $usuario, $password);
 				$conn>exec("SET CHARACTER SET utf8");
-				$qry = "INSERT INTO ".$db.".cliente  (correo, nombre, app, pass, telefono, direccion, nickname) VALUE ('".$mail."','".$nombre."','".$apellidos."','".$pass."','".$tel."','".$direccion."','".$nickname."');";
+				$qry = "INSERT INTO ".$db.".cliente  (correo, nombre, app, pass, telefono, direccion, nickname,foto) VALUE ('".$mail."','".$nombre."','".$apellidos."','".$pass."','".$tel."','".$direccion."','".$nickname."','".$foto."');";
 				$cont = $conn->exec($qry);
 				$conn = null;
 			}
@@ -38,6 +93,7 @@
 			foreach ($conn->query($qry) as $row) 
 			{
 				$conn = null;
+				//echo($row['id']);
         				return $row['id'];
 			}
 			
@@ -254,6 +310,9 @@
 		}
 	}
 	//Ejemplos de como llamar las funciones:
+	//hayDuplicidad('asdf');
+	//getSucursal(13);
+	//getCliente(4);
 	//getSitios(1);
 	//getPaises();
 	//asociaSitio(13,9);
@@ -265,4 +324,5 @@
 	//insertaSitio("México","Distrito Federal", "Central de Autobuses del Sur");
 	//existeUsuario('alex','superdupi');
 	//obtenCarrosDisponibles('2010-11-11','2013-04-19',7);
+	 //insertaUsuario('alex', 'ortiz', '57107009', 'valle de tormes 174', 'holaalex2204@hotmail.com','holaalex2204', 'superdupi', '/guapo.jpg');
 ?>
