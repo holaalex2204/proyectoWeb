@@ -381,16 +381,18 @@
 		try {
 			$conn = new PDO('mysql:host='.$url.';dbname='.$db.';charset=utf8', $usuario, $password);
 			$conn>exec("SET CHARACTER SET utf8");
-			$qry = "SELECT sucursal.id from sucursal  where   nombre LIKE CONCAT('%','".$nickname."','%') and   pass  LIKE CONCAT('%','".$pass."','%');";
-			while ($conn->query($qry)->fetch()) 
+			$qry = "SELECT sucursal.id  as id from sucursal  where   nombre LIKE CONCAT('%','".$nickname."','%') and   pass  LIKE CONCAT('%','".$pass."','%');";
+			while ($row = $conn->query($qry)->fetch()) 
 			{
+				$conn = null;
         				return $row['id'];
 			}
-			$conn = null;
+			
 		} catch (PDOException $e) {
 		    print "Error!: " . $e->getMessage() . "<br/>";
-		    return 0;
+		    return null;
 		}
+		return null;
 		
 	}
 	//Ejemplos de como llamar las funciones:
