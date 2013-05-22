@@ -36,7 +36,7 @@ CREATE TABLE `carro` (
   `noSerie` varchar(45) NOT NULL,
   `modelo` int(11) NOT NULL,
   `status` enum('Disponible','No Disponible') DEFAULT NULL,
-  `transmision` enum('Automatica','Manual') DEFAULT NULL,
+  `transmision` enum('Automática','Manual','CVT','Tiptronic') DEFAULT NULL,
   `sucursal` int(11) NOT NULL,
   `year` int(11) DEFAULT NULL,
   PRIMARY KEY (`noSerie`),
@@ -51,7 +51,7 @@ CREATE TABLE `carro` (
 
 LOCK TABLES `carro` WRITE;
 /*!40000 ALTER TABLE `carro` DISABLE KEYS */;
-INSERT INTO `carro` VALUES ('D3783645',3,'Disponible','Manual',13,2013),('D3783646',3,'Disponible','Manual',13,2013),('D3783647',3,'Disponible','Manual',13,2013),('D3783687',3,'Disponible','Manual',13,2013);
+INSERT INTO `carro` VALUES ('D3783645',3,'Disponible','Manual',13,2013),('D3783646',3,'Disponible','Manual',13,2013),('D3783647',3,'Disponible','Manual',13,2013),('D3783687',3,'Disponible','Manual',13,2013),('F3250723',1,'Disponible','Manual',13,2013),('WV531123',4,'Disponible','Automática',13,2010);
 /*!40000 ALTER TABLE `carro` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -96,7 +96,6 @@ CREATE TABLE `cliente` (
   `telefono` varchar(12) DEFAULT NULL,
   `direccion` varchar(250) DEFAULT NULL,
   `nickname` varchar(50) DEFAULT NULL,
-  `foto` varchar(100) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `correo` (`correo`)
 ) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
@@ -108,7 +107,7 @@ CREATE TABLE `cliente` (
 
 LOCK TABLES `cliente` WRITE;
 /*!40000 ALTER TABLE `cliente` DISABLE KEYS */;
-INSERT INTO `cliente` VALUES (4,'holaalex2204@hotmail.com','alex','ortiz','superdupi','57107009','valle de tormes 174','holaalex2204','/guapo.jpg');
+INSERT INTO `cliente` VALUES (4,'holaalex2204@hotmail.com','alex','ortiz','superdupi','57107009','valle de tormes 174','holaalex2204');
 /*!40000 ALTER TABLE `cliente` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -124,12 +123,12 @@ CREATE TABLE `modelo` (
   `nombre` varchar(50) DEFAULT NULL,
   `capacidadPersonas` int(11) DEFAULT NULL,
   `rendimiento` double(5,2) DEFAULT NULL,
-  `categoria` enum('Compacto','Mediano','Deportivo','Lujoso','SUV') DEFAULT NULL,
+  `categoria` enum('Pequeño','Grande','Ejecutivo','CRV','Premium') DEFAULT NULL,
   `foto` varchar(200) DEFAULT NULL,
   `precioDia` double(5,2) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `nombre` (`nombre`)
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=5 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -138,7 +137,7 @@ CREATE TABLE `modelo` (
 
 LOCK TABLES `modelo` WRITE;
 /*!40000 ALTER TABLE `modelo` DISABLE KEYS */;
-INSERT INTO `modelo` VALUES (1,'FIAT 500C',4,15.85,'Compacto',NULL,420.00),(2,'FORK IKON',4,18.00,'Compacto',NULL,420.00),(3,'Pontiac Matiz',4,18.50,'Compacto','matiz2005.jpg',420.00);
+INSERT INTO `modelo` VALUES (1,'FIAT 500C',4,15.85,'Pequeño',NULL,420.00),(2,'FORK IKON',4,18.00,'Pequeño',NULL,420.00),(3,'Pontiac Matiz',4,18.50,'Pequeño','matiz2005.jpg',420.00),(4,'GOL SEDAN',5,14.00,'Pequeño','images/GOL SEDAN',550.00);
 /*!40000 ALTER TABLE `modelo` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -163,7 +162,7 @@ CREATE TABLE `pais` (
 
 LOCK TABLES `pais` WRITE;
 /*!40000 ALTER TABLE `pais` DISABLE KEYS */;
-INSERT INTO `pais` VALUES (2,'Colombia'),(3,'EUA'),(1,'México');
+INSERT INTO `pais` VALUES (1,'México');
 /*!40000 ALTER TABLE `pais` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -182,6 +181,7 @@ CREATE TABLE `renta` (
   `id_sitio` int(11) DEFAULT NULL,
   `id_cliente` int(11) DEFAULT NULL,
   `noSerie` varchar(45) DEFAULT NULL,
+  `diaTransaccion` date DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `id_sitio` (`id_sitio`),
   KEY `id_cliente` (`id_cliente`),
@@ -189,7 +189,7 @@ CREATE TABLE `renta` (
   CONSTRAINT `renta_ibfk_1` FOREIGN KEY (`id_sitio`) REFERENCES `sitio` (`id`),
   CONSTRAINT `renta_ibfk_2` FOREIGN KEY (`id_cliente`) REFERENCES `cliente` (`id`),
   CONSTRAINT `renta_ibfk_3` FOREIGN KEY (`noSerie`) REFERENCES `carro` (`noSerie`)
-) ENGINE=InnoDB AUTO_INCREMENT=11 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -198,6 +198,7 @@ CREATE TABLE `renta` (
 
 LOCK TABLES `renta` WRITE;
 /*!40000 ALTER TABLE `renta` DISABLE KEYS */;
+INSERT INTO `renta` VALUES (16,'2013-05-01','2013-05-04',1680,7,4,'D3783645','2013-05-22'),(17,'2013-05-01','2013-05-04',1680,7,4,'D3783646','2013-05-22'),(18,'2013-05-01','2013-05-04',1680,7,4,'D3783647','2013-05-22'),(19,'2013-05-01','2013-05-04',1680,7,4,'D3783687','2013-05-22'),(20,'2013-05-16','2013-05-23',3360,7,4,'D3783645','2013-05-22'),(21,'2013-05-24','2013-05-25',840,7,4,'D3783645','2013-05-22'),(22,'2013-05-01','2013-05-24',13200,7,4,'WV531123','2013-05-22');
 /*!40000 ALTER TABLE `renta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -254,7 +255,7 @@ CREATE TABLE `sitiosServicio` (
 
 LOCK TABLES `sitiosServicio` WRITE;
 /*!40000 ALTER TABLE `sitiosServicio` DISABLE KEYS */;
-INSERT INTO `sitiosServicio` VALUES (13,7);
+INSERT INTO `sitiosServicio` VALUES (13,5),(13,6),(13,8);
 /*!40000 ALTER TABLE `sitiosServicio` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -376,4 +377,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2013-05-21 17:39:54
+-- Dump completed on 2013-05-22  1:27:21

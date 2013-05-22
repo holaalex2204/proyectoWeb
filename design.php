@@ -26,8 +26,8 @@
 			}
 			else
 			{
-				$tab=array("Ingresar Modelo","Registra Auto","Renta a Clientes","Revisar Ventas","Cerrar Sesión");
-				$tabURL=array("altaModelo.php","altaAuto.php","renta.php","revisaVentas.php","cerrar.php");
+				$tab=array("Ingresar Modelo","Registra Auto","Renta a Clientes","Revisar Ventas","Registrar Servicios","Cerrar Sesión");
+				$tabURL=array("altaModelo.php","altaAuto.php","renta.php","revisaVentas.php","altaServicios.php","cerrar.php");
 			}
 		}
 		
