@@ -29,10 +29,10 @@ function upload_image($destination_dir,$name_media_field){
 	if($aux==true)
 	{
 		if(insertaModelo($_POST['modelo'],$_POST['capacidad'],$_POST['rendimiento'], $_POST['cat'],'images/'.$_POST['modelo'],$_POST['precio'])!=0){
-		//header("Location: AltaModelo.php?error=0");
+		header("Location: AltaModelo.php?error=0");
 		}
 		else{
-		//header("Location: AltaModelo.php?error=1");
+		header("Location: AltaModelo.php?error=1");
 		}
-	}
+	}?>
 	

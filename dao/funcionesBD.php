@@ -279,6 +279,7 @@
 		try {
 			$conn = new PDO('mysql:host='.$url.';dbname='.$db.';charset=utf8', $usuario, $password);
 			$qry = "INSERT INTO sitiosServicio (id_sucursal, id_sitio)  VALUE (".$sucursal.",".$sitio.");";
+//			echo($qry);
 			$cont = $conn->exec($qry);
 			$conn = null;
 		} catch (PDOException $e) {
