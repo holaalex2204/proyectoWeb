@@ -21,8 +21,11 @@
 			$error='<p class="error">Usuario y/o Contraseña Incorrecta'.$temp.'</p>';
 		}
 	}
-	if(isset($_SESSION["id"])){
+	if(isset($_SESSION["id"])&&$_SESSION["perm"]==0){
 		header("Location: index.php");
+	}
+	if(isset($_SESSION["id"])&&$_SESSION["perm"]==1){
+		header("Location: menu.php");
 	}
 	include("design.php");
 	drawHeader("Iniciar Sesión ",null,5,null);

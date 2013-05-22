@@ -232,12 +232,28 @@
 			return "nada";
 		}
 	}
+	function datosRentaUsuario($usuario)
+	{
+		global $url, $usuario, $password, $db;
+		try {
+			$conn = new PDO('mysql:host='.$url.';dbname='.$db.';charset=utf8', $usuario, $password);
+			foreach ($conn->query("select CONCAT(m.nombre,' con transmisión ', c.transmision, ' ' , 'y no. de Serie ', c.noSerie)  as carro, r.id from renta r, carro c, modelo m, cliente cl where  r.id_cliente = cl.id and r.noSerie = c.noSerie and c.modelo = m.id and cl.id=".$cliente." order by r.id desc ;") as $row) 
+			{
+				$conn= null;
+        				return $row;
+			}
+		} catch (PDOException $e) 
+		{
+		    print "Error!: " . $e->getMessage() . "<br/>";
+			return "nada";
+		}
+	}
 	function insertaRentaCliente($ini,$fin,$sitio,$cliente,$modelo) // retorna el importe y el formato de la fecha de ini y fin son //aaaa-mm-dd
 	{
 		global $url, $usuario, $password, $db;
 		try {
 			$conn = new PDO('mysql:host='.$url.';dbname='.$db.';charset=utf8', $usuario, $password);
-			$qry = "INSERT INTO renta (ini, fin, importe, id_sitio, id_cliente, noSerie)  VALUE ('".$ini."','".$fin."',((ABS(DATEDIFF('".$ini."','".$fin."'))+1)*".precioDia($modelo)."),".$sitio.",".$cliente.",(select c.noSerie from carro c where c.modelo=".$modelo." and c.noSerie NOT IN(select distinct r.noSerie from renta r where '".$fin."' BETWEEN r.ini and r.fin or '".$ini."' BETWEEN r.ini and r.fin or r.ini BETWEEN '".$ini."' and '".$fin."'  ) LIMIT 0,1));";
+			$qry = "INSERT INTO renta (ini, fin, importe, id_sitio, id_cliente, noSerie,diaTransaccion)  VALUE ('".$ini."','".$fin."',((ABS(DATEDIFF('".$ini."','".$fin."'))+1)*".precioDia($modelo)."),".$sitio.",".$cliente.",(select c.noSerie from carro c where c.modelo=".$modelo." and c.noSerie NOT IN(select distinct r.noSerie from renta r where '".$fin."' BETWEEN r.ini and r.fin or '".$ini."' BETWEEN r.ini and r.fin or r.ini BETWEEN '".$ini."' and '".$fin."'  ) LIMIT 0,1),now());";
 			//echo($qry);
 			$cont = $conn->exec($qry);
 			if($cont ==1)
@@ -413,7 +429,58 @@
 		return null;
 		
 	}
-	getModelos();
+	function resumenRentas($ini, $fin)
+	{
+		global $url, $usuario, $password, $db;
+		try {
+			$conn = new PDO('mysql:host='.$url.';dbname='.$db.';charset=utf8', $usuario, $password);
+			$qry = "SELECT r.ini , r.fin, r.importe, CONCAT(p.nombre,', ',ci.nombre, ': ',s.sitio ) as lugar, CONCAT(cl.nombre,' ' , cl.app) as cliente,    CONCAT(m.nombre,': ' , ca.noSerie) as auto  from renta r, pais p, ciudad ci, sitio s, cliente cl, modelo m, carro ca  where   
+			r.diaTransaccion  BETWEEN  '".$ini."' and '".$fin."' and
+			r.noSerie LIKE ca.noSerie and
+			r.id_cliente = cl.id and
+			r.id_sitio = s.id and 
+			p.id = s.pais and ci.id = s.ciudad and m.id = ca.modelo order by r.diaTransaccion, lugar;";
+			//echo($qry);
+			$texto = "";
+			foreach ($conn->query($qry) as $row) 
+			{
+				$aux = "
+				<tr>
+					<td>".$row['ini']."</td>
+					<td>".$row['fin']."</td>
+					<td>$".$row['importe']."</td>
+					<td>".$row['lugar']."</td>
+					<td>".$row['cliente']."</td>
+					<td>".$row['auto']."</td>
+				</tr>";
+				$texto = $texto.$aux;
+			}
+			//echo($texto);
+			$qry = "SELECT SUM(importe) as total  from renta r  where  r.diaTransaccion  BETWEEN  '".$ini."' and '".$fin."';";
+			foreach ($conn->query($qry) as $row) 
+			{
+				$aux = "
+				<tr>
+					<td></td>
+
+					<td>TOTAL:</td>
+					<td>$".$row['total']."</td>
+					<td></td>
+					<td></td>
+					<td></td>					
+				</tr>";
+				$texto = $texto.$aux;
+			}
+			return $texto;
+			
+			
+		} catch (PDOException $e) {
+		    print "Error!: " . $e->getMessage() . "<br/>";
+		}
+		return $texto;
+	}
+	resumenRentas('2010-10-10','2013-10-10');
+	//getModelos();
 	//Ejemplos de como llamar las funciones:
 	//hayDuplicidad('asdf');
 	//getSucursal(13);
