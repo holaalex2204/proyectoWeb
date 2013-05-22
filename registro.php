@@ -20,7 +20,7 @@
 							echo '<p> El nombre de usuario o email ya existen</p>';
 						}
 					?>
-					<form action="registrar.php" method="post" onsubmit="valida()">
+					<form action="registrar.php" method="post">
               <ul>
                   <li>
                       <label for="nombre">Nombre</label>

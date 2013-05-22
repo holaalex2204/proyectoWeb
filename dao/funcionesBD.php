@@ -162,12 +162,31 @@
 		}
 		return $cont;
 	}
-	function precioDia($noSerie) //Devuelve el precio por día al que es rentado un carro.
+	function precioRenta($mod,$ini, $fin) //Devuelve el precio por día al que es rentado un carro.
 	{
 		global $url, $usuario, $password, $db;
 		try {
 			$conn = new PDO('mysql:host='.$url.';dbname='.$db.';charset=utf8', $usuario, $password);
-			$qry = "SELECT precioDia from carro, modelo where carro.noSerie LIKE '".$noSerie."' AND carro.modelo = modelo.id;";
+			$qry = "SELECT (((ABS(DATEDIFF('".$ini."','".$fin."'))+1)*precioDia) as pd from  modelo where ".$mod." = modelo.id;";
+			foreach ($conn->query($qry) as $row) 
+			{
+				$conn = null;
+        				return $row['pd'];
+			}
+		
+		} catch (PDOException $e) 
+		{
+		    print "Error!: " . $e->getMessage() . "<br/>";
+		    die();
+		}
+		return $cont;
+	}
+	function precioDia($modelo) //Devuelve el precio por día al que es rentado un carro.
+	{
+		global $url, $usuario, $password, $db;
+		try {
+			$conn = new PDO('mysql:host='.$url.';dbname='.$db.';charset=utf8', $usuario, $password);
+			$qry = "SELECT precioDia from  modelo where ".$modelo." = modelo.id;";
 			foreach ($conn->query($qry) as $row) 
 			{
 				$conn = null;
@@ -181,19 +200,52 @@
 		}
 		return $cont;
 	}
-	function insertaRentaCliente($ini,$fin,$sitio,$cliente,$noserie) // retorna el importe y el formato de la fecha de ini y fin son //aaaa-mm-dd
+	function datosRenta($id)
 	{
 		global $url, $usuario, $password, $db;
 		try {
 			$conn = new PDO('mysql:host='.$url.';dbname='.$db.';charset=utf8', $usuario, $password);
-			$qry = "INSERT INTO renta (ini, fin, importe, id_sitio, id_cliente, noSerie)  VALUE ('".$ini."','".$fin."',(ABS(DATEDIFF('".$ini."','".$fin."')+1)*".precioDia($noserie)."),".$sitio.",".$cliente.",'".$noserie."');";
-			echo($qry);
+			foreach ($conn->query("select CONCAT(m.nombre,' con transmisión ', c.transmision, ' ' , 'y no. de Serie ', c.noSerie)  as carro, CONCAT(cl.nombre, ' ',cl.app) as cliente, CONCAT(DATE_FORMAT(r.ini,'%d/%m/%Y'),' al ',DATE_FORMAT(r.fin,'%d/%m/%Y')) as fecha, s.sitio, r.importe as importe from renta r, carro c, modelo m, sitio s, cliente cl where r.id_sitio = s.id and r.id_cliente = cl.id and r.noSerie = c.noSerie and c.modelo = m.id and r.id=".$id." order by r.id desc LIMIT 0,1;") as $row) 
+			{
+				$conn= null;
+        				return $row;
+			}
+		} catch (PDOException $e) 
+		{
+		    print "Error!: " . $e->getMessage() . "<br/>";
+			return "nada";
+		}
+	}
+	function datosUltimaRenta($cliente)
+	{
+		global $url, $usuario, $password, $db;
+		try {
+			$conn = new PDO('mysql:host='.$url.';dbname='.$db.';charset=utf8', $usuario, $password);
+			foreach ($conn->query("select CONCAT(m.nombre,' con transmisión ', c.transmision, ' ' , 'y no. de Serie ', c.noSerie)  as carro, CONCAT(cl.nombre, ' ',cl.app) as cliente, CONCAT(DATE_FORMAT(r.ini,'%d/%m/%Y'),' al ',DATE_FORMAT(r.fin,'%d/%m/%Y')) as fecha, s.sitio , r.importe as importe from renta r, carro c, modelo m, sitio s, cliente cl where r.id_sitio = s.id and r.id_cliente = cl.id and r.noSerie = c.noSerie and c.modelo = m.id and cl.id=".$cliente." order by r.id desc LIMIT 0,1;") as $row) 
+			{
+				$conn= null;
+        				return $row;
+			}
+		} catch (PDOException $e) 
+		{
+		    print "Error!: " . $e->getMessage() . "<br/>";
+			return "nada";
+		}
+	}
+	function insertaRentaCliente($ini,$fin,$sitio,$cliente,$modelo) // retorna el importe y el formato de la fecha de ini y fin son //aaaa-mm-dd
+	{
+		global $url, $usuario, $password, $db;
+		try {
+			$conn = new PDO('mysql:host='.$url.';dbname='.$db.';charset=utf8', $usuario, $password);
+			$qry = "INSERT INTO renta (ini, fin, importe, id_sitio, id_cliente, noSerie)  VALUE ('".$ini."','".$fin."',((ABS(DATEDIFF('".$ini."','".$fin."'))+1)*".precioDia($modelo)."),".$sitio.",".$cliente.",(select c.noSerie from carro c where c.modelo=".$modelo." and c.noSerie NOT IN(select distinct r.noSerie from renta r where '".$fin."' BETWEEN r.ini and r.fin or '".$ini."' BETWEEN r.ini and r.fin or r.ini BETWEEN '".$ini."' and '".$fin."'  ) LIMIT 0,1));";
+			//echo($qry);
 			$cont = $conn->exec($qry);
 			if($cont ==1)
 			{
-				foreach ($conn->query("SELECT (ABS(DATEDIFF('".$ini."','".$fin."')+1)*".precioDia($noserie).") as f") as $row) 
+				foreach ($conn->query("select CONCAT(m.nombre,' con transmisión ', c.transmision, ' ' , 'y no. de Serie ', c.noSerie)  as carro, CONCAT(cl.nombre, ' ',cl.app) as cliente, CONCAT(DATE_FORMAT(r.ini,'%d/%m/%Y'),' al ',DATE_FORMAT(r.fin,'%d/%m/%Y')) as fecha, s.sitio from renta r, carro c, modelo m, sitio s, cliente cl where r.id_sitio = s.id and r.id_cliente = cl.id and r.noSerie = c.noSerie and c.modelo = m.id and cl.id=".$cliente." order by r.id desc LIMIT 0,1;") as $row) 
 				{
-        					$cont = $row['f'];
+					$conn= null;
+        					return 1;
 				}
 
 			}
@@ -229,7 +281,7 @@
 			
 			foreach ($conn->query($qry) as $row) 
 			{
-				$texto = $texto."<option value='".$row['id']."'>".$row['nombre']."</option>";
+				$texto = $texto.getCiudades($row['id']);
 			}
 			$conn = null;
 		} catch (PDOException $e) {
@@ -244,10 +296,12 @@
 		try {
 			$texto = " ";
 			$conn = new PDO('mysql:host='.$url.';dbname='.$db.';charset=utf8', $usuario, $password);
-			$qry = "select distinct ciudad.id, ciudad.nombre from ciudad, sitio where ciudad.id = sitio.ciudad and sitio.pais=".$pais." order by  ciudad.nombre asc;";
+			$qry = "select distinct ciudad.id, ciudad.nombre, pais.nombre as pais from ciudad, sitio, pais where ciudad.id = sitio.ciudad and sitio.pais=".$pais." and pais.id =".$pais." order by  ciudad.nombre asc;";
 			foreach ($conn->query($qry) as $row) 
 			{
-				$texto = $texto."<option value='".$row['id']."'>".$row['nombre']."</option>";
+				$texto = $texto."<optgroup label='".$row['pais'].",  ".$row['nombre']."'>";
+				$texto = $texto.getSitios($row['id']);
+				$texto = $texto."</optgroup>";
 			}
 			$conn = null;
 		} catch (PDOException $e) {
@@ -280,10 +334,39 @@
 		try {
 			$texto = " ";
 			$conn = new PDO('mysql:host='.$url.';dbname='.$db.';charset=utf8', $usuario, $password);
-			$qry = "select m.nombre, count(*) as cantidad from modelo m, carro c where  m.id = c.modelo and c.sucursal = (select id_sucursal from sitiosServicio where id_sitio=".$sitio.") and c.noSerie  NOT IN(select distinct r.noSerie from renta r where '".$fin."' BETWEEN r.ini and r.fin or '".$ini."' BETWEEN r.ini and r.fin or r.ini BETWEEN '".$ini."' and '".$fin."' ) and c.status LIKE 'Disponible' group by m.nombre order by m.nombre;";
+			$qry = "select distinct m.id as id ,m.nombre, m.capacidadPersonas as cp, m.rendimiento as re, m.categoria as ca, m.foto  from modelo m, carro c where  m.id = c.modelo and c.sucursal = (select id_sucursal from sitiosServicio where id_sitio=".$sitio.") and c.noSerie  NOT IN(select distinct r.noSerie from renta r where '".$fin."' BETWEEN r.ini and r.fin or '".$ini."' BETWEEN r.ini and r.fin or r.ini BETWEEN '".$ini."' and '".$fin."' ) and c.status LIKE 'Disponible'  order by m.nombre;";
+			$texto = "";
 			foreach ($conn->query($qry) as $row) 
 			{
-				$texto = $texto." ".$row['nombre'].":".$row['cantidad']."<br>";
+				$aux='<a href="recuperacliente.php?modelo='.$row['id'].'&ini='.$ini.'&fin='.$fin.'&modelo='.$row['id'].'&sitio='.$sitio.'">
+				<div class="opcion">
+					<div class="encabezaOpcion"><h4>'.$row['nombre'].'</h4>	</div>
+					<table>
+					<tr>
+					<td width="350px">
+					<ul>
+						<li>Rendimiento: </li>
+						<li>Categoria:</li>
+						<li>Capacidad Personas</li>
+					</ul>
+					</td>
+					<td width="350px">
+					<ul>
+						<li>'.$row['re'].'</li>
+						<li>'.$row['ca'].'</li>
+						<li>'.$row['cp'].'</li>
+					</ul>
+					</td>
+					<td width="350px"><img src="'.$row['foto'].'" width="150px"></img></td>
+					</table>
+					<div class="encabezaOpcion"><h4>Costo : '.precioRenta($row['id'],$ini,$fin).'</h4>	</div>
+				</div>
+				</a>';
+				$texto = $texto.$aux;
+			}
+			if($texto == "")
+			{
+				$texto = "<h3>Lo sentimos, no hay autos disponibles.<h3>";
 			}
 			$conn = null;
 		} catch (PDOException $e) {
@@ -299,7 +382,7 @@
 			$conn = new PDO('mysql:host='.$url.';dbname='.$db.';charset=utf8', $usuario, $password);
 			$conn>exec("SET CHARACTER SET utf8");
 			$qry = "SELECT sucursal.id from sucursal  where   nombre LIKE CONCAT('%','".$nickname."','%') and   pass  LIKE CONCAT('%','".$pass."','%');";
-			foreach ($conn->query($qry) as $row) 
+			while ($conn->query($qry)->fetch()) 
 			{
         				return $row['id'];
 			}
@@ -308,11 +391,7 @@
 		    print "Error!: " . $e->getMessage() . "<br/>";
 		    return 0;
 		}
-	}
-	$funcion=$_GET['funcion'];
-	if($funcion == "getCiudades")
-	{
-		echo(getCiudades($_GET['idpais']));
+		
 	}
 	//Ejemplos de como llamar las funciones:
 	//hayDuplicidad('asdf');

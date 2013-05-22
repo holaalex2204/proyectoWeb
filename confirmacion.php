@@ -12,12 +12,34 @@
 ?>
 <body>  
 <link href="css/valida.css" rel="stylesheet" type="text/css" />
-<SCRIPT>
- function checaFecha()
+<STYLE>
+.encabezaOpcion
 {
-	
+	background-color:#330000;
+	border-radius:6px;
+	margin-bottom:30px;
+	text-align:center;
+	opacity:1;
+	margin:9px 6px 9px 6px;
 }
-</script>
+
+.opcion 
+{
+	margin-top:30px;
+	background-color:#cccccc;
+	border-radius:6px;
+	border:1px solid #ffff66;
+	font-size:15px;
+	padding:6px 24px 20px 24px;
+	font-family:Oldtown, fantasy;
+	width:500px;
+}
+.opcion:hover 
+{
+	background-color:#ffffff;
+}
+</style>
+
 <!--==============================content================================-->
     <section id="content"><div class="ic"></div>
     	<div class="pad-1">
@@ -25,19 +47,15 @@
             <div class="page6-row1">
                 
                 <div class="col-16">
-                    <h2 class="h2 p2">Renta de Autos:</h2>
-				<form id="form" method="post" action="elegirCarro.php">
-					<ul>
-						<li>	<label>Fecha de Inicio</label><input type="date" name="inicio" required="required"></li>
-						<li>	<label>Fecha de Entrega</label><input type="date" name="fin" required="required"></li>
-						<li>	<label>Lugar de Entrega</label></li>
-						<li>	<select size="1" name="sitio" required="required" ><?php echo(getPaises());?></select> </li>					
-					</ul>
-					<input type="submit" value="Ver Opciones" />
-                     		</form>
+                    <h2 class="h2 p2">Gracias por tu preferencia:</h2>
+		<h3>Confirmación</h3>
+				<?php
+					$a = datosUltimaRenta($_GET['cliente']);
+					echo("Felicidades ".$a['cliente']." acabas de rentar un ".$a['carro']." durante el periodo del ".$a['fecha'].". <br> Te recordamos que el lugar pactado para la entrega y devolución es ".$a['sitio']."<br> El valor de tu compra fue: $".$a['importe']);
+				?>
+				
                 </div>
             </div>
-			
         </div>           
     </section> 
 <!--==============================footer=================================-->
