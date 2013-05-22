@@ -61,7 +61,7 @@
 		    print "Error!: " . $e->getMessage() . "<br/>";
 		}
 	}
-	function insertaUsuario($nombre,  $apellidos, $tel, $direccion, $mail, $nickname, $pass, $foto)
+	function insertaUsuario($nombre,  $apellidos, $tel, $direccion, $mail, $nickname, $pass)
 	{
 		global $url, $usuario, $password, $db;
 		try {
@@ -69,7 +69,7 @@
 			{
 				$conn = new PDO('mysql:host='.$url.';dbname='.$db.';charset=utf8', $usuario, $password);
 				$conn>exec("SET CHARACTER SET utf8");
-				$qry = "INSERT INTO ".$db.".cliente  (correo, nombre, app, pass, telefono, direccion, nickname,foto) VALUE ('".$mail."','".$nombre."','".$apellidos."','".$pass."','".$tel."','".$direccion."','".$nickname."','".$foto."');";
+				$qry = "INSERT INTO ".$db.".cliente  (correo, nombre, app, pass, telefono, direccion, nickname) VALUE ('".$mail."','".$nombre."','".$apellidos."','".$pass."','".$tel."','".$direccion."','".$nickname."');";
 				$cont = $conn->exec($qry);
 				$conn = null;
 			}
@@ -328,6 +328,24 @@
 		}
 		return $texto;
 	}
+	function getModelos()
+	{
+		global $url, $usuario, $password, $db;
+		try {
+			$texto = " ";
+			$conn = new PDO('mysql:host='.$url.';dbname='.$db.';charset=utf8', $usuario, $password);
+			$qry = "select id, nombre from modelo m order by  2 asc;";
+			foreach ($conn->query($qry) as $row) 
+			{
+				$texto = $texto."<option value='".$row['id']."'>".$row['nombre']."</option>";
+			}
+			$conn = null;
+		} catch (PDOException $e) {
+		    print "Error!: " . $e->getMessage() . "<br/>";
+		    die();
+		}
+		return $texto;
+	}
 	function obtenCarrosDisponibles($ini, $fin, $sitio)
 	{
 		global $url, $usuario, $password, $db;
@@ -395,6 +413,7 @@
 		return null;
 		
 	}
+	getModelos();
 	//Ejemplos de como llamar las funciones:
 	//hayDuplicidad('asdf');
 	//getSucursal(13);

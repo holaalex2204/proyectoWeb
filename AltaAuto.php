@@ -1,7 +1,22 @@
+<?php
+	include("dao/funcionesBD.php");
+	session_start();
+	$user=null;
+	$session=false;
+	if(isset($_SESSION["id"])){
+		$session=true;
+		$user=$_SESSION["nom"];
+	}
+	else{
+		header("Location: index.php");
+	}
+	include("design.php");
+	drawHeader("Alta Modelo",null,1,$user);
+?>
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>AltaAuto</title>
+    <title>AltaModelo</title>
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" media="screen" href="css/reset.css">
     <link rel="stylesheet" type="text/css" media="screen" href="css/style.css">
@@ -21,26 +36,7 @@
 	<![endif]-->
 </head>
 <body>
-  <!--==============================header=================================-->
-  <div class="header">
-  	<div>
-        <div class="subpages-nav">
-            <nav>  
-                <ul class="menu">
-                    <li class="li-none"><a href="index.html">Inicio</a></li>
-                    <li><a href="AltaModelo.html">Ingresar Modelo</a></li>
-					<li class="current"><a href="AltaAuto.html">Registra Auto</a></li>
-                    <li><a href="Renta.html">Renta a otros clientes</a></li>
-                    <li><a href="Ventas.html">Revisar Ventas</a></li>
-                    
-					
-                </ul>
-                <h1><a href="index.html"><img src="images/logo.png" alt=""></a></h1>
-            </nav>
-        </div>
-    </div>
-  </div>   
-<!--==============================content================================-->
+  <!--==============================header=================================--><!--==============================content================================-->
     <section id="content"><div class="ic"></div>
     	<div class="pad-1">
 		
@@ -48,28 +44,36 @@
                 
                 <div class="col-16">
                     <h2 class="h2 p2">Ingresa los siguientes datos:</h2>
-					<form id="form" method="post" >
+					<?php 
+						if($_GET['error']==1){
+							echo '<p> El noSerie ya Existe</p>';
+						}
+						if($_GET['error']==1){
+							echo '<p> Ã‰xito al ingresar el carro.</p>';
+						}
+					?>
+					<form id="form" method="post" action="insertaAuto.php">
                       <fieldset>
                         
-						id<label><input type="text" name="id"  maxlength="23" required="required"></label><br>
+						NÃºmero de Serie<label><input type="text" name="nserie"  maxlength="17" required="required"></label><br>
 
 
-						Modelo<label><input type="text" name="modelo" required="required"></label><br>
-						Capacidad de Pasajeros<label><input type="number" name="capacidad" required="required" min="2" max="8"></label><br>
-						Rendimiento<label><input type="number" name="capacidad" required="required"></label><br>
-						Categoría<label><select size="1" name="cat"><br>
+						Modelo<label><select size="1" name="modelo"><?php echo(getModelos()); 
+						?>
+						</select> </label><br>
+						TransmisiÃ³n<label><select size="1" name="transmision"><br>
 						<option selected="selected" required="required">-</option>
-						<option>Pequeños</option>
-						<option>Grandes</option>
-						<option>Ejecutivos</option>
-						<option>CRV</option>
-						<option>Premium</option>
+						<option>Manual</option>
+						<option>AutomÃ¡tica</option>
+						<option>CVT</option>
+						<option>Tiptronic</option>
+						
 						</select> 
 						</label>
-						Foto<input type="file" name="foto"/> <br>
-						
-					Precio por Día<label><input type="number" name="precio" required="required" ></label><br>
-						<input type="submit" name="EnviarDatos" value="Aceptar" />
+						<label><input type="hidden" name="suc" value="<?php echo($_SESSION["id"]);?>" >
+						</label>
+					AÃ±o<label><input type="number" name="year" required="required" min="2009" max="2013"></label><br>
+						<input type="submit" name="EnviarDatos" value="Registrarse" />
                         <div class="btns"><a href="#" class="link-1" onClick="document.getElementById('form').submit()">Aceptar</a></div>
                       </fieldset>  
                      
@@ -80,7 +84,7 @@
     </section> 
 <!--==============================footer=================================-->
     <footer>
-        <span><strong>© 2013 ESCOM</strong><br><span>Arroyo. | Ortíz. | Cardenas </span><br/>
+        <span><strong>Â© 2013 ESCOM</strong><br><span>Arroyo. | OrtÃ­z. | Cardenas </span><br/>
     </footer>	           
 </body>
 </html>

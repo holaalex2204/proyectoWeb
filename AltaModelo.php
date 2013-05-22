@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <title>AltaModelo</title>
+    <title>AltaAuto</title>
     <meta charset="utf-8">
     <link rel="stylesheet" type="text/css" media="screen" href="css/reset.css">
     <link rel="stylesheet" type="text/css" media="screen" href="css/style.css">
@@ -28,8 +28,8 @@
             <nav>  
                 <ul class="menu">
                     <li class="li-none"><a href="index.html">Inicio</a></li>
-                    <li class="current"><a href="AltaModelo.html">Ingresar Modelo</a></li>
-					<li ><a href="AltaAuto.html">Registra Auto</a></li>
+                    <li><a href="AltaModelo.html">Ingresar Modelo</a></li>
+					<li class="current"><a href="AltaAuto.html">Registra Auto</a></li>
                     <li><a href="Renta.html">Renta a otros clientes</a></li>
                     <li><a href="Ventas.html">Revisar Ventas</a></li>
                     
@@ -51,31 +51,25 @@
 					<form id="form" method="post" >
                       <fieldset>
                         
-						Número de Serie<label><input type="text" name="nserie"  maxlength="17" required="required"></label><br>
+						id<label><input type="text" name="id"  maxlength="23" required="required"></label><br>
 
 
 						Modelo<label><input type="text" name="modelo" required="required"></label><br>
-						Status<label><input type="text" name="status" required="required"></label><br>
-						Transmisión<label><select size="1" name="transmision"><br>
+						Capacidad de Pasajeros<label><input type="number" name="capacidad" required="required" min="2" max="8"></label><br>
+						Rendimiento<label><input type="number" name="capacidad" required="required"></label><br>
+						Categoría<label><select size="1" name="cat"><br>
 						<option selected="selected" required="required">-</option>
-						<option>Manual</option>
-						<option>Automática</option>
-						<option>CVT</option>
-						<option>Tiptronic</option>
-						
+						<option>Pequeños</option>
+						<option>Grandes</option>
+						<option>Ejecutivos</option>
+						<option>CRV</option>
+						<option>Premium</option>
 						</select> 
 						</label>
-					sucursal <label><select size="1" name="sucursal"><br>
-						<option selected="selected" required="required">-</option>
-						<option>A</option>
-						<option>B</option>
-						<option>C</option>
-						<option>D</option>
+						Foto<input type="file" name="foto"/> <br>
 						
-						</select> 
-						</label>
-					año<label><input type="number" name="año" required="required" min="2009" max="2013"></label><br>
-						<input type="submit" name="EnviarDatos" value="Registrarse" />
+					Precio por Día<label><input type="number" name="precio" required="required" ></label><br>
+						<input type="submit" name="EnviarDatos" value="Aceptar" />
                         <div class="btns"><a href="#" class="link-1" onClick="document.getElementById('form').submit()">Aceptar</a></div>
                       </fieldset>  
                      

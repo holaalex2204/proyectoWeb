@@ -21,13 +21,13 @@
 		}else{
 			if($_SESSION["perm"]==0)
 			{
-				$tab=array("Inicio","Galeria","Renta","Contacto","Administrar: ".$activeSession,"cerrar sesión");
+				$tab=array("Inicio","Galeria","Renta","Contacto","Administrar: ".$activeSession,"Cerrar Sesión");
 				$tabURL=array("index.php","galeria.php","renta.php","contacto.php","administrar.php","cerrar.php");
 			}
 			else
 			{
-				$tab=array("Ingresar Modelo","Registra Auto","Renta a Clientes","Revisar Ventas","cerrar sesión");
-				$tabURL=array("altaModelo.php","altaAuto.php","renta.php","revisaVentas.php","cerrar.php");
+				$tab=array(" ","Ingresar Modelo","Registra Auto","Renta a Clientes","Revisar Ventas","Cerrar Sesión");
+				$tabURL=array(" ","altaModelo.php","altaAuto.php","renta.php","revisaVentas.php","cerrar.php");
 			}
 		}
 		

@@ -10,7 +10,8 @@
 		header("Location: index.php");
 	}
 	include("design.php");
-	drawHeader("Perfil",null,4,$user);
+	include("dao/funcionesBD.php");
+	drawHeader("Menú Administrador",null,0,$user);
 ?>
 <section id="content"><div class="ic"></div>
     	<div class="pad-1">
