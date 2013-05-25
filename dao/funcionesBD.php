@@ -480,7 +480,24 @@
 		}
 		return $texto;
 	}
-	resumenRentas('2010-10-10','2013-10-10');
+	function recuperaCliente($correo)
+	{
+		global $url, $usuario, $password, $db;
+		try {
+			$conn = new PDO('mysql:host='.$url.';dbname='.$db.';charset=utf8', $usuario, $password);
+			$conn>exec("SET CHARACTER SET utf8");
+			$qry = "SELECT correo as mail, nombre as nombre, app as apellidos, telefono as tel, direccion as dir, nickname as nickname, pass as password  from  cliente  where  cliente.correo = '".$correo."';";
+			$result = $conn->query($qry)->fetch(PDO::FETCH_ASSOC);
+			//print_r($result);
+			$conn= null;
+			return $result;
+		} catch (PDOException $e) 
+		{
+		    print "Error!: " . $e->getMessage() . "<br/>";
+			return 0;
+		}
+	}
+	//resumenRentas('2010-10-10','2013-10-10');
 	//getModelos();
 	//Ejemplos de como llamar las funciones:
 	//hayDuplicidad('asdf');

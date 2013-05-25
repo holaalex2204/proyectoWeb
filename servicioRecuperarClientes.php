@@ -1,4 +1,7 @@
 <?php
+	include("dao/funcionesBD.php");
+	$campo = $_GET['campo'];
+	$correo = $_GET['correo'];
 	session_start();
 	if(isset($_SESSION["id"])){
 		if($_SESSION["perm"]==1){
